@@ -26,6 +26,7 @@ int main(void)
     if (expression == NULL)
     {
         printf("Der Speicher im Heap konnte nicht zugewiesen werden.\n");
+        free(expression);
         return -1;
     }
 
@@ -40,34 +41,19 @@ int main(void)
             expression[len - 1] = '\0';
         }
 
-        for (int i = 0; expression[i] != '\0'; i++)
+        int isParsed = sscanf(expression, "%f %c %f", &zahl1, &operation, &zahl2);
+        if (isParsed != 3 || strchr(op, operation) == NULL)
         {
-            if (expression[i] == ' ')
-            {
-                continue;
-            }
-
-            if (expression[0] >= 48 && expression[0] <= 57)
-            {
-                zahl1 = (float)(expression[0] - '0'); // e.g. '2'--> 50 - 48 = 2
-            }
-            else if (expression[3] >= 48 && expression[3] <= 57)
-            {
-                zahl2 = (float)(expression[0] - '0');
-            }
-            else
-            {
-                if (expression[1] == op[i])
-                {
-                    operation = expression[1];
-                }
-            }
+            printf("Bitte machen Sie eine gueltige Eingabe!\n");
+            return -1;
         }
+
         ergebnis = calculateResult(zahl1, operation, zahl2);
-        printf("Das ergebnis betraegt: %.2f\n", ergebnis);
+        printf("Das Ergebnis betraegt: %f\n", ergebnis);
 
         printf("Moechten Sie das program beenden? J/n: ");
         (void)scanf(" %c", &exit);
+        while ((getchar()) != '\n');
 
         if (exit == 'J' || exit == 'j')
         {
