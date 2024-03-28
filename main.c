@@ -41,6 +41,12 @@ int main(void)
             expression[len - 1] = '\0';
         }
 
+        if (strlen(expression) == 0) // leere Eingabe
+        {
+            printf("Bitte machen Sie eine gueltige Eingabe!\n");
+            continue;
+        }
+
         int isParsed = sscanf(expression, "%f %c %f", &zahl1, &operation, &zahl2);
         if (isParsed != 3 || strchr(op, operation) == NULL)
         {
@@ -51,7 +57,7 @@ int main(void)
         ergebnis = calculateResult(zahl1, operation, zahl2);
         printf("Das Ergebnis betraegt: %f\n", ergebnis);
 
-        printf("Moechten Sie das program beenden? J/n: ");
+        printf("Moechten Sie das Programm beenden? J/n: ");
         (void)scanf(" %c", &exit);
         while ((getchar()) != '\n');
 
